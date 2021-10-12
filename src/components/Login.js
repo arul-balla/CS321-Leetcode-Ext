@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-//import axios from 'axios';
+import axios from 'axios';
 import DialogTitle from '@mui/material/DialogTitle';
 import Dialog from '@mui/material/Dialog';
-import Grid from '@mui/material/Grid';
 import DialogContent from '@mui/material/DialogContent';
-import DialogActions from '@mui/material/DialogActions';
 
 class Login extends Component{
     constructor(props){
@@ -30,6 +28,43 @@ class Login extends Component{
             open: false
         });
     }
+
+    handleChange = (event) => {
+        this.setState({
+            [event.target.name]: event.target.value
+        });
+    }
+
+    handleSubmit = (event) => {
+        event.preventDefault();
+        const userData = {
+            email: this.state.email,
+            password: this.state.password
+        }
+        axios.post('/login', userData).then(res => {
+            const FBIdToken = `Bearer ${res.data.token}`;
+            localStorage.setItem('FBIdToken', FBIdToken);
+            axios.defaults.headers.common['Authorization'] = FBIdToken;
+            console.log("SUCCESS!");
+        })
+        .catch((error)=> {
+            if (error.response.data.error === 'auth/invalid-email'){
+                this.setState({
+                    errors: {
+                        email: "Invalid Email"
+                    } 
+                })
+            }
+            else if (error.response.data.general !== ''){
+                this.setState({
+                    errors: {
+                        password: "Wrong Credentials, Please try again"
+                    }
+                })
+            }
+        })
+    }
+    
 
     render(){
         return(
