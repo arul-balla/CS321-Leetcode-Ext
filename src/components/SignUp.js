@@ -6,19 +6,20 @@ import DialogTitle from '@mui/material/DialogTitle';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import {Link} from 'react-router-dom';
-import AuthContext from './AuthContext';
-class Login extends Component{
-    static contextType = AuthContext;
+
+class SignUp extends Component{
     constructor(props){
         super(props);
-        console.log(props);
         this.state = {
-            open: false,
+            open: true,
             email: '',
             password: '',
+            confirmPassword: '',
+            handle: '',
             errors: {}
         }
     }
+
     componentDidUpdate(prevProps) {
         if (prevProps.match !== this.props.match){
             this.setState({
@@ -54,17 +55,17 @@ class Login extends Component{
         event.preventDefault();
         const userData = {
             email: this.state.email,
-            password: this.state.password
+            password: this.state.password,
+            confirmPassword: this.state.confirmPassword,
+            userHandle: this.state.handle
         }
-        axios.post('/login', userData).then(res => {
+        axios.post('/signup', userData).then(res => {
             const FBIdToken = `Bearer ${res.data.token}`;
             localStorage.setItem('FBIdToken', FBIdToken);
             axios.defaults.headers.common['Authorization'] = FBIdToken;
-            this.context.setLoggedIn(true);
             console.log("SUCCESS!");
         })
         .catch((error)=> {
-            console.log(error);
             if (error.response.data.error === 'auth/invalid-email'){
                 this.setState({
                     errors: {
@@ -92,7 +93,7 @@ class Login extends Component{
                     aria-labelledby="alert-dialog-title"
                     aria-describedby="alert-dialog-description">
                     <DialogTitle style = {{fontSize: '28px'}}>
-                        Login
+                        Sign Up
                     </DialogTitle>
                     <DialogContent>
                     <form style = {{alignItems: 'center', padding: '1%'}} noValidate onSubmit = {this.handleSubmit}>
@@ -118,6 +119,27 @@ class Login extends Component{
                             value = {this.state.password} 
                             onChange = {this.handleChange}></TextField>
                         <br/>
+                        <TextField 
+                            id = "confirmPassword" 
+                            name = "confirmPassword" 
+                            type = "password" 
+                            label = "Password" 
+                            helperText = {this.state.errors.confirmPassword} 
+                            style = {{width: '400px'}}
+                            error = {this.state.errors.confirmPassword ? true:false}                                
+                            value = {this.state.confirmPassword} 
+                            onChange = {this.handleChange}></TextField>
+                        <br/>
+                        <TextField 
+                            id = "handle" 
+                            name = "handle"
+                            label = "User Handle" 
+                            helperText = {this.state.errors.handle} 
+                            style = {{width: '400px'}}
+                            error = {this.state.errors.handle ? true:false}                                
+                            value = {this.state.handle} 
+                            onChange = {this.handleChange}></TextField>
+                        <br/>
                         <Button 
                             style = {{marginTop: '3%', left: '30%'}}
                             type = "submit" 
@@ -126,8 +148,8 @@ class Login extends Component{
                             >Submit
                         </Button>
                         <br/>
-                        <small style = {{paddingLeft: '15%', paddingTop: '2%'}}>Don't have an account? 
-                        Sign Up <Link to = "/signup/open">here</Link> </small>
+                        <small style = {{paddingLeft: '15%', paddingTop: '2%'}}>Already have an account? 
+                        Login <Link to = "/login/open">here</Link></small>
                         </form>
                     </DialogContent>
                 </Dialog>
@@ -136,4 +158,4 @@ class Login extends Component{
     }
 }
 
-export default Login;
+export default SignUp;
