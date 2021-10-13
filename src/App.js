@@ -9,7 +9,7 @@ import Navbar from './Navbar';
 axios.defaults.baseURL = "https://us-central1-leetcode-90738.cloudfunctions.net/api";
 function App() {
   return (
-    <div className="App">
+    <div>
       <Login/>
       <Router>
         <div>

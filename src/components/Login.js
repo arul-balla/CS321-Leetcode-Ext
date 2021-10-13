@@ -11,7 +11,6 @@ class Login extends Component{
     static contextType = AuthContext;
     constructor(props){
         super(props);
-        console.log(props);
         this.state = {
             open: false,
             email: '',
@@ -61,15 +60,17 @@ class Login extends Component{
             localStorage.setItem('FBIdToken', FBIdToken);
             axios.defaults.headers.common['Authorization'] = FBIdToken;
             this.context.setLoggedIn(true);
-            console.log("SUCCESS!");
+            this.handleClose();
         })
         .catch((error)=> {
-            console.log(error);
+            this.setState({
+                errors: error.response.data
+            });
             if (error.response.data.error === 'auth/invalid-email'){
                 this.setState({
-                    errors: {
-                        email: "Invalid Email"
-                    } 
+                    errors:{
+                        email: "Invalid email"
+                    }
                 })
             }
             else if (error.response.data.general !== ''){
@@ -79,10 +80,8 @@ class Login extends Component{
                     }
                 })
             }
-        })
+        });
     }
-    
-
     render(){
         return(
             <div>

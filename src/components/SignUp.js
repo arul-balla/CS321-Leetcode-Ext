@@ -6,8 +6,10 @@ import DialogTitle from '@mui/material/DialogTitle';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import {Link} from 'react-router-dom';
+import AuthContext from './AuthContext';
 
 class SignUp extends Component{
+    static contextType = AuthContext;
     constructor(props){
         super(props);
         this.state = {
@@ -15,7 +17,7 @@ class SignUp extends Component{
             email: '',
             password: '',
             confirmPassword: '',
-            handle: '',
+            userHandle: '',
             errors: {}
         }
     }
@@ -57,26 +59,25 @@ class SignUp extends Component{
             email: this.state.email,
             password: this.state.password,
             confirmPassword: this.state.confirmPassword,
-            userHandle: this.state.handle
+            userHandle: this.state.userHandle
         }
         axios.post('/signup', userData).then(res => {
             const FBIdToken = `Bearer ${res.data.token}`;
             localStorage.setItem('FBIdToken', FBIdToken);
             axios.defaults.headers.common['Authorization'] = FBIdToken;
+            this.context.setLoggedIn(true);
+            this.handleClose();
             console.log("SUCCESS!");
         })
         .catch((error)=> {
+            console.log(error.response);
+            this.setState({
+                errors: error.response.data
+            });
             if (error.response.data.error === 'auth/invalid-email'){
                 this.setState({
-                    errors: {
-                        email: "Invalid Email"
-                    } 
-                })
-            }
-            else if (error.response.data.general !== ''){
-                this.setState({
-                    errors: {
-                        password: "Wrong Credentials, Please try again"
+                    errors:{
+                        email: "Invalid email or already in use"
                     }
                 })
             }
@@ -131,13 +132,13 @@ class SignUp extends Component{
                             onChange = {this.handleChange}></TextField>
                         <br/>
                         <TextField 
-                            id = "handle" 
-                            name = "handle"
+                            id = "userHandle" 
+                            name = "userHandle"
                             label = "User Handle" 
                             helperText = {this.state.errors.handle} 
                             style = {{width: '400px'}}
                             error = {this.state.errors.handle ? true:false}                                
-                            value = {this.state.handle} 
+                            value = {this.state.userHandle} 
                             onChange = {this.handleChange}></TextField>
                         <br/>
                         <Button 

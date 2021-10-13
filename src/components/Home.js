@@ -1,4 +1,3 @@
-
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 
@@ -27,9 +26,11 @@ class Home extends Component {
     render() {
         const { classes } = this.props;
         return (
-            <h1>Home!</h1>
+            <div>
+                <h1 style = {{paddingTop: '3%'}}>Welcome!</h1>
+            </div>
         );
     }
 }
 
-export default withStyles(styles)(Home);
+export default Home;
