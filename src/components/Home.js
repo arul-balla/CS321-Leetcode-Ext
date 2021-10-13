@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Problems from './Problems';
 import { withStyles } from '@material-ui/core/styles';
 
 
@@ -26,8 +27,8 @@ class Home extends Component {
     render() {
         const { classes } = this.props;
         return (
-            <div>
-                <h1 style = {{paddingTop: '3%'}}>Welcome!</h1>
+            <div style = {{paddingTop: '3%'}}>
+                <Problems/>
             </div>
         );
     }
