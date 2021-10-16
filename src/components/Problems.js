@@ -4,6 +4,7 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
+import LinearProgress from '@mui/material/LinearProgress';
 import axios from 'axios';
 const styles = ({
   root: {
@@ -19,6 +20,7 @@ class BusinessCard extends Component {
     this.state = {
       users: [],
       problems: [],
+      categories: [],
       open: false
     }
   }
@@ -40,6 +42,20 @@ class BusinessCard extends Component {
               })
               .catch(err => {
                   console.log(err);
+              })
+
+              axios.get(`/problemcounts/${user}`).then(res => {
+                return res.data;
+              }).then(data => {
+                this.setState({
+                  categories: [...this.state.categories, {
+                    user: user,
+                    problemCounts: data
+                  }]
+                })
+              })
+              .catch(err => {
+                console.log(err);
               })
         })
     })
@@ -99,6 +115,26 @@ class BusinessCard extends Component {
                         </Grid>
                         );
                       })}
+                      {
+                        user.length > 0 &&
+                        this.state.categories.map(categoryUser => {
+                          return (
+                            <div>
+                              {
+                                categoryUser.user === user[0].userHandle && 
+                                Object.keys(categoryUser.problemCounts).map((key, index) => {
+                                  return (
+                                    <div>
+                                      <p>{key}</p>
+                                      <LinearProgress variant = "determinate" value = {categoryUser.problemCounts[key]/user.length *100}></LinearProgress>
+                                    </div>
+                                  );
+                                })
+                              }
+                            </div>
+                          );
+                        })
+                      }
                       </CardContent>
                     </Card>
                 }
