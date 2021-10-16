@@ -6,6 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
 import AuthContext from './components/AuthContext';
+import Home from './components/Home';
 
 const styles = ({
   root: {
@@ -58,7 +59,6 @@ const Navbar = (props) => {
                   onClick={() => {
                     localStorage.removeItem("FBdDToken");
                     setLoggedIn(false);
-                    this.props.history.push("/");
                   }}
                 >Logout</Button>
               </div>
