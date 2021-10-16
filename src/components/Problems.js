@@ -1,19 +1,16 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
-import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import axios from 'axios';
 const styles = ({
   root: {
-    maxWidth: 500,
     alignSelf: 'center'
   },
 });
+
 
 class BusinessCard extends Component {
 
@@ -38,12 +35,11 @@ class BusinessCard extends Component {
                 return res.data;
               }).then(data => {
                   this.setState({
-                      problems: [...this.state.problems, {handle: user, data: data}]
+                      problems: [...this.state.problems, data]
                   });
-                  console.log(this.state.problems)
               })
               .catch(err => {
-                  console.log(err.response);
+                  console.log(err);
               })
         })
     })
@@ -63,7 +59,53 @@ class BusinessCard extends Component {
   render() {
     const classes = this.props;
     return (
-      <h1></h1>
+      <Grid
+        container
+        direction="row"
+        alignItems="center"
+        justify="center"
+        spacing = {5}
+        xs = {12}
+        style={{ paddingTop: '3%' }}
+      >
+        {this.state.problems !== undefined &&
+          this.state.problems.map((user) => {
+            return (
+              <Grid item>
+                {
+                  user.length > 0 &&
+                    <Card>
+                      <CardContent>
+                      {user.length > 0 && <h1>{user[0].userHandle}</h1>}
+                      {user.length > 0 && user.map(problem => {
+                        return (
+                        <Grid
+                          container
+                          direction = "row"
+                          alignItems = "left"
+                          justify = "left"
+                          spacing = {5}
+                        >
+                          <Grid item>
+                            <Typography variant="body2" color="textSecondary" component="p">
+                            {problem.title}
+                            </Typography>
+                          </Grid>
+                          <Grid item>
+                            <Typography variant="body2" color="textSecondary" component="p">
+                              {problem.time} minutes
+                            </Typography>
+                          </Grid>
+                        </Grid>
+                        );
+                      })}
+                      </CardContent>
+                    </Card>
+                }
+            </Grid>);
+          })
+          }
+      </Grid>
     );
   }
 }

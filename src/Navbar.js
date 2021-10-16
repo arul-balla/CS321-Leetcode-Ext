@@ -58,6 +58,7 @@ const Navbar = (props) => {
                   onClick={() => {
                     localStorage.removeItem("FBdDToken");
                     setLoggedIn(false);
+                    this.props.history.push("/");
                   }}
                 >Logout</Button>
               </div>

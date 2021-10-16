@@ -27,7 +27,7 @@ class Home extends Component {
     render() {
         const { classes } = this.props;
         return (
-            <div style = {{paddingTop: '3%'}}>
+            <div style = {{paddingTop: '5%'}}>
                 <Problems/>
             </div>
         );

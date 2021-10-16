@@ -7,6 +7,7 @@ import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import {Link} from 'react-router-dom';
 import AuthContext from './AuthContext';
+
 class Login extends Component{
     static contextType = AuthContext;
     constructor(props){
@@ -61,6 +62,7 @@ class Login extends Component{
             axios.defaults.headers.common['Authorization'] = FBIdToken;
             this.context.setLoggedIn(true);
             this.handleClose();
+            this.props.history.push("/");
         })
         .catch((error)=> {
             this.setState({
