@@ -81,7 +81,6 @@ class BusinessCard extends Component {
         alignItems="center"
         justify="center"
         spacing = {5}
-        xs = {12}
         style={{ paddingTop: '3%' }}
       >
         {this.state.problems !== undefined &&

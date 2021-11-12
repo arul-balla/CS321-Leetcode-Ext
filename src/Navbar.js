@@ -55,7 +55,7 @@ const Navbar = (props) => {
             <Button className={classes.button} component={Link} to="/">Home</Button>
             {loggedIn ? (
               <div>   
-                <Button className={classes.button} component={Link} to="/login"
+                <Button name = "logout" className={classes.button} component={Link} to="/login"
                   onClick={() => {
                     localStorage.removeItem("FBdDToken");
                     setLoggedIn(false);
@@ -63,7 +63,7 @@ const Navbar = (props) => {
                 >Logout</Button>
               </div>
             ) : (
-                <Button className={classes.button} component={Link} to="/login/open">Login</Button>
+                <Button name = "login" className={classes.button} component={Link} to="/login/open">Login</Button>
               )}
           </Toolbar>
         </AppBar>

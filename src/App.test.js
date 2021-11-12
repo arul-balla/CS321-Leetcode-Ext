@@ -1,5 +1,5 @@
 // import dependencies
-import React, {useState} from 'react'
+import React from 'react'
 import App from './App'
 import AuthContext from './components/AuthContext';
 
@@ -8,29 +8,27 @@ import {rest} from 'msw'
 import {setupServer} from 'msw/node'
 
 // import react-testing methods
-import {render, fireEvent, waitFor, screen} from '@testing-library/react'
+import {render, fireEvent, screen, getByText} from '@testing-library/react'
 
 // add custom jest matchers from jest-dom
-import '@testing-library/jest-dom'
-// the component to test
-import Problems from './components/Problems'
+import '@testing-library/jest-dom';
 
-const server = setupServer(
-    rest.get('/problems', (req, res, ctx) => {
+  //Mock data to test rendering objects
+  const server = setupServer(
+    rest.get('/problem', (req, res, ctx) => {
       return res(ctx.json({
-        problemId: '4450934',
-        title: 'Sub Array Sum',
-        userHandle: 'Leela',
-        category: ['Array', 'Stack'],
-        createdAt: '1636725188109'
+        title: "Sub-array Matching",
+        time: "3",
+        userHandle: "User",
+        categories: ["Array", "Stack", "Hash Table"]
       }))
     }),
   )
-  
+
   beforeAll(() => server.listen())
   afterEach(() => server.resetHandlers())
   afterAll(() => server.close())
-  
+
   test('Displays Login Button', async () => {
     const loggedIn = false;
     const setLoggedIn = false;
@@ -47,20 +45,29 @@ const server = setupServer(
     </AuthContext.Provider>);
     expect(screen.getByText('Logout')).toBeInTheDocument();
   })
+
+  test('Login opens Dialog', async() => {
+    const loggedIn = false;
+    const setLoggedIn = false;
+    render(<AuthContext.Provider value = {{loggedIn, setLoggedIn}}>
+      <App/>
+    </AuthContext.Provider>)
+
+    const loginButton = screen.getByRole("button", { name: /login/i });
+    fireEvent.click(loginButton)
+    expect(await screen.getByText('Password')).toBeInTheDocument();
+  })
+
+  test('Logout Appears + removes Button', async() => {
+    const loggedIn = true;
+    render(<AuthContext.Provider value = {{loggedIn}}>
+      <App/>
+    </AuthContext.Provider>)
+
+    const logoutButton = screen.getByRole("button", { name: /logout/i });
+    fireEvent.click(logoutButton)
+    expect(logoutButton).toBeNull();
+    await waitForElement(() => getByText('Password'));
+  })
   
-  /*test('handles server error', async () => {
-    server.use(
-      rest.get('/greeting', (req, res, ctx) => {
-        return res(ctx.status(500))
-      }),
-    )
   
-    render(<Fetch url="/greeting" />)
-  
-    fireEvent.click(screen.getByText('Load Greeting'))
-  
-    await waitFor(() => screen.getByRole('alert'))
-  
-    expect(screen.getByRole('alert')).toHaveTextContent('Oops, failed to fetch!')
-    expect(screen.getByRole('button')).not.toBeDisabled()
-  })*/
