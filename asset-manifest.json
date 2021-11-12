@@ -1,21 +1,21 @@
 {
   "files": {
     "main.css": "/CS321-Leetcode-Ext/static/css/main.471f5be3.chunk.css",
-    "main.js": "/CS321-Leetcode-Ext/static/js/main.817a495b.chunk.js",
-    "main.js.map": "/CS321-Leetcode-Ext/static/js/main.817a495b.chunk.js.map",
+    "main.js": "/CS321-Leetcode-Ext/static/js/main.c0acf546.chunk.js",
+    "main.js.map": "/CS321-Leetcode-Ext/static/js/main.c0acf546.chunk.js.map",
     "runtime-main.js": "/CS321-Leetcode-Ext/static/js/runtime-main.886a063b.js",
     "runtime-main.js.map": "/CS321-Leetcode-Ext/static/js/runtime-main.886a063b.js.map",
-    "static/js/2.dc26825a.chunk.js": "/CS321-Leetcode-Ext/static/js/2.dc26825a.chunk.js",
-    "static/js/2.dc26825a.chunk.js.map": "/CS321-Leetcode-Ext/static/js/2.dc26825a.chunk.js.map",
+    "static/js/2.9bf6bccf.chunk.js": "/CS321-Leetcode-Ext/static/js/2.9bf6bccf.chunk.js",
+    "static/js/2.9bf6bccf.chunk.js.map": "/CS321-Leetcode-Ext/static/js/2.9bf6bccf.chunk.js.map",
     "index.html": "/CS321-Leetcode-Ext/index.html",
     "static/css/main.471f5be3.chunk.css.map": "/CS321-Leetcode-Ext/static/css/main.471f5be3.chunk.css.map",
-    "static/js/2.dc26825a.chunk.js.LICENSE.txt": "/CS321-Leetcode-Ext/static/js/2.dc26825a.chunk.js.LICENSE.txt",
+    "static/js/2.9bf6bccf.chunk.js.LICENSE.txt": "/CS321-Leetcode-Ext/static/js/2.9bf6bccf.chunk.js.LICENSE.txt",
     "static/media/logo.6ce24c58.svg": "/CS321-Leetcode-Ext/static/media/logo.6ce24c58.svg"
   },
   "entrypoints": [
     "static/js/runtime-main.886a063b.js",
-    "static/js/2.dc26825a.chunk.js",
+    "static/js/2.9bf6bccf.chunk.js",
     "static/css/main.471f5be3.chunk.css",
-    "static/js/main.817a495b.chunk.js"
+    "static/js/main.c0acf546.chunk.js"
   ]
 }
