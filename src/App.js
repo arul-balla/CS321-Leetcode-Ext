@@ -16,7 +16,7 @@ function App() {
         <Navbar/>
             <div>
               <Switch>
-                <Route exact path = "/" component = {Home}/>
+                <Route exact path = "/CS321-Leetcode-Ext" component = {Home}/>
                 <Route name = "login" exact path = "/login/:open" component = {Login}/>
                 <Route exact path = "/signup/:open" component = {SignUp}/>
               </Switch>
