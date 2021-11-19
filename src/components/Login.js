@@ -62,7 +62,7 @@ class Login extends Component{
             axios.defaults.headers.common['Authorization'] = FBIdToken;
             this.context.setLoggedIn(true);
             this.handleClose();
-            this.props.history.push("/CS321-Leetcode-Ext");
+            this.props.history.push("/CS321-Leetcode-Ext/");
         })
         .catch((error)=> {
             this.setState({
